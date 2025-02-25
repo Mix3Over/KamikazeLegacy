@@ -2,32 +2,39 @@ document.addEventListener("DOMContentLoaded", function () {
     const volumeButton = document.getElementById("volume-button");
     const volumeSlider = document.getElementById("volume-slider");
 
+    // Preload images to fix the issue of play button not loading on first click
+    const playIcon = new Image();
+    playIcon.src = "Content/Play.png";
+
+    const pauseIcon = new Image();
+    pauseIcon.src = "Content/Pause.png";
+
     document.querySelectorAll('.audio-player').forEach(player => {
         const audio = player.querySelector('.audio');
         const playButton = player.querySelector('.play-button');
         const playImage = playButton.querySelector('img');
         const progressBarContainer = player.querySelector('.progress-bar-container');
         const progressBar = player.querySelector('.progress-bar');
-        
+
+        // Set initial play button image
+        playImage.src = playIcon.src;
+
         // Create time display element
         const timeDisplay = document.createElement("div");
         timeDisplay.classList.add("time-display");
         timeDisplay.textContent = "0:00 / 0:00";
         progressBarContainer.after(timeDisplay);
-        
-        const playIcon = "Content/Play.png";
-        const pauseIcon = "Content/Pause.png";
 
         // Play/Pause functionality
         playButton.addEventListener("click", function () {
             if (audio.paused) {
                 audio.play();
-                playImage.src = pauseIcon;
+                playImage.src = pauseIcon.src;
                 playImage.style.width = "55px";  // Smaller pause button
                 playImage.style.height = "55px";
             } else {
                 audio.pause();
-                playImage.src = playIcon;
+                playImage.src = playIcon.src;
                 playImage.style.width = "80px";  // Normal play button size
                 playImage.style.height = "80px";
             }
@@ -54,9 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Reset button image when audio ends
         audio.addEventListener("ended", function () {
-            playImage.src = playIcon;
+            playImage.src = playIcon.src;
             progressBar.style.width = "0%";
             timeDisplay.textContent = "0:00 / " + formatTime(audio.duration);
+            playImage.style.width = "80px";  // Reset button size
+            playImage.style.height = "80px";
         });
     });
 
@@ -64,7 +73,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.audio').forEach(audio => {
         audio.volume = volumeSlider.value / 3;
     });
-    
+
     // Volume control
     volumeSlider.addEventListener("input", function () {
         const volume = volumeSlider.value;
