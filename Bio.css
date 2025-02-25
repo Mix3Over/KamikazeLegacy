@@ -1,0 +1,235 @@
+@font-face {
+    font-family: TitleFont;
+    src: url(Fonts/Trajan\ Pro\ Regular.ttf);
+  }
+  
+  @font-face {
+    font-family: Main;
+    src: url(Fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf);
+  }
+  
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    overflow: hidden;
+    font-family: Main;
+  }
+  
+  .website-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: -17px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  html {
+    height: 100%;
+    width: 100%;
+  }
+  
+  /* Header */
+  .LeftContent {
+    display: flex;
+    align-items: center;
+    margin-left: 0;
+    height: 100%;
+  }
+  
+  .logo {
+    font-size: 50px;
+    line-height: 70px;
+  }
+  
+  .header {
+    background-color: rgb(26, 26, 26);
+    color: white;
+    padding: 5px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .TopContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: TitleFont;
+    font-size: 70px;
+    position: relative;
+    width: 100%;
+    padding: 0 30px;
+    box-sizing: border-box;
+  }
+  
+  .CenterContent {
+    display: flex;
+    gap: 0px;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-left: -7px;
+  }
+  
+  .nav-button {
+    margin-top: 3px;
+    background-color: rgba(255, 255, 255, 0);
+    color: white;
+    font-weight: 500;
+    border: none;
+    height: 70px;
+    width: 200px;
+    font-size: 25px;
+    line-height: 70px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    font-family: Main;
+  }
+  
+  .nav-button:hover {
+    color: rgb(126, 126, 126);
+  }
+  
+  .RightContent {
+    display: none;
+  }
+  
+  /* Header-End */
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin: 0;
+    flex: 1;
+  }
+  
+  .horizontal-bar {
+    background-color: rgb(41, 41, 41);
+    height: 35px;
+  }
+  
+  /* Extra-Content */
+  .extra-content {
+    background-color: #111111;
+    padding: 50px 0;
+  }
+  
+  .example-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px auto;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  .example-section .text-content {
+    flex: 1;
+    color: #f0f0f0;
+    font-family: Main;
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .example-section .text-content .title {
+    font-family: TitleFont;
+    font-size: 60px;
+    margin-bottom: 20px;
+  }
+  
+  .example-section .text-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    width: 90%;
+    margin-left: 40px;
+    text-align: justify;
+  }
+  
+  .example-section .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .example-section .image-content img {
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  }
+  
+  .reversed {
+    flex-direction: row-reverse;
+  }
+  
+  @media (max-width: 768px) {
+    .example-section {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .reversed {
+      flex-direction: column;
+    }
+  
+    .example-section .image-content {
+      margin-bottom: 20px;
+    }
+  }
+  
+  
+  /* Footer */
+  .footer-bar {
+    background-color: rgb(26, 26, 26);
+    color: rgb(128, 128, 128);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    bottom: 0;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .footer-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    max-width: 1200px;
+  }
+  
+  .footer-content .social-icons {
+    display: flex;
+    gap: 50px;
+  }
+  
+  .footer-content .social-icons img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    opacity: 0.7;
+  }
+  
+  .scroll-top:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+  }
