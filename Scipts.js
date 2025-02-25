@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Preload images to fix the issue of play button not loading on first click
     const playIcon = new Image();
-    playIcon.src = "Content/Play.png";
+    playIcon.src = "Content/Play.png?t=" + new Date().getTime(); // Cache-busting
 
     const pauseIcon = new Image();
-    pauseIcon.src = "Content/Pause.png";
+    pauseIcon.src = "Content/Pause.png?t=" + new Date().getTime(); // Cache-busting
 
     document.querySelectorAll('.audio-player').forEach(player => {
         const audio = player.querySelector('.audio');
@@ -16,10 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
         const progressBarContainer = player.querySelector('.progress-bar-container');
         const progressBar = player.querySelector('.progress-bar');
 
-        // Set initial play button image
-        playImage.src = playIcon.src;
+        // Set initial play button image from localStorage if available
+        playImage.src = localStorage.getItem('playImage') || playIcon.src;
 
-        // Create time display element
+        // Ensure play button images reload correctly on navigation
+        playImage.onload = function () {
+            console.log("Play button image loaded successfully:", playImage.src);
+        };
+        playImage.onerror = function () {
+            console.error("Error loading play button image:", playImage.src);
+        };
+
+        // Create time display element (KEPT THIS!)
         const timeDisplay = document.createElement("div");
         timeDisplay.classList.add("time-display");
         timeDisplay.textContent = "0:00 / 0:00";
@@ -38,6 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 playImage.style.width = "80px";  // Normal play button size
                 playImage.style.height = "80px";
             }
+            localStorage.setItem('playImage', playImage.src);
         });
 
         // Update progress bar and time display
@@ -66,7 +75,9 @@ document.addEventListener("DOMContentLoaded", function () {
             timeDisplay.textContent = "0:00 / " + formatTime(audio.duration);
             playImage.style.width = "80px";  // Reset button size
             playImage.style.height = "80px";
+            localStorage.setItem('playImage', playImage.src);
         });
+
     });
 
     volumeSlider.value = 0.5;
@@ -90,6 +101,20 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         volumeSlider.value = isMuted ? 1 : 0;
         volumeButton.innerText = isMuted ? "🔊" : "🔇";
+    });
+
+    // Fix for navigation issues (Play button image not loading when coming back to the page)
+    window.addEventListener("pageshow", function () {
+        document.querySelectorAll('.play-button img').forEach(img => {
+            img.src = "Content/Play.png?t=" + new Date().getTime(); // Reload images properly
+        });
+    });
+
+    // Save play button state before unloading the page
+    window.addEventListener("beforeunload", function () {
+        document.querySelectorAll('.play-button img').forEach(img => {
+            localStorage.setItem('playImage', img.src);
+        });
     });
 
     // Format time function
