@@ -20,30 +20,37 @@ document.addEventListener("DOMContentLoaded", function () {
         playImage.src = localStorage.getItem('playImage') || playIcon.src;
 
         // Ensure play button images reload correctly on navigation
-        playImage.onload = function () {
-            console.log("Play button image loaded successfully:", playImage.src);
-        };
-        playImage.onerror = function () {
-            console.error("Error loading play button image:", playImage.src);
-        };
-
-        // Create time display element (KEPT THIS!)
+        // playImage.onload = function () {
+        //     console.log("Play button image loaded successfully:", playImage.src);
+        // };
+        // playImage.onerror = function () {
+        //     console.error("Error loading play button image:", playImage.src);
+        // };
+        
         const timeDisplay = document.createElement("div");
         timeDisplay.classList.add("time-display");
-        timeDisplay.textContent = "0:00 / 0:00";
+        timeDisplay.textContent = "0:00 / " + formatTime(audio.duration);
         progressBarContainer.after(timeDisplay);
 
         // Play/Pause functionality
         playButton.addEventListener("click", function () {
             if (audio.paused) {
+                document.querySelectorAll('.audio-player').forEach(x => {
+                    const newAudio = x.querySelector('.audio');
+                    const newPlayImage = x.querySelector('img');
+                    newAudio.pause();
+                    newPlayImage.src = playIcon.src;
+                    newPlayImage.style.width = "80px";
+                    newPlayImage.style.height = "80px";
+                });
                 audio.play();
                 playImage.src = pauseIcon.src;
-                playImage.style.width = "55px";  // Smaller pause button
+                playImage.style.width = "55px";
                 playImage.style.height = "55px";
             } else {
                 audio.pause();
                 playImage.src = playIcon.src;
-                playImage.style.width = "80px";  // Normal play button size
+                playImage.style.width = "80px";
                 playImage.style.height = "80px";
             }
             localStorage.setItem('playImage', playImage.src);
@@ -55,6 +62,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const progress = (audio.currentTime / audio.duration) * 100;
                 progressBar.style.width = progress + "%";
                 timeDisplay.textContent = formatTime(audio.currentTime) + " / " + formatTime(audio.duration);
+            }else{
+                
+                timeDisplay.textContent = "0:00 / " + formatTime(audio.duration);
             }
         });
 
@@ -73,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
             playImage.src = playIcon.src;
             progressBar.style.width = "0%";
             timeDisplay.textContent = "0:00 / " + formatTime(audio.duration);
-            playImage.style.width = "80px";  // Reset button size
+            playImage.style.width = "80px";
             playImage.style.height = "80px";
             localStorage.setItem('playImage', playImage.src);
         });
@@ -85,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function () {
         audio.volume = volumeSlider.value / 3;
     });
 
-    // Volume control
     volumeSlider.addEventListener("input", function () {
         const volume = volumeSlider.value;
         document.querySelectorAll('.audio').forEach(audio => {
@@ -103,21 +112,18 @@ document.addEventListener("DOMContentLoaded", function () {
         volumeButton.innerText = isMuted ? "🔊" : "🔇";
     });
 
-    // Fix for navigation issues (Play button image not loading when coming back to the page)
     window.addEventListener("pageshow", function () {
         document.querySelectorAll('.play-button img').forEach(img => {
-            img.src = "Content/Play.png?t=" + new Date().getTime(); // Reload images properly
+            img.src = "Content/Play.png?t=" + new Date().getTime();
         });
     });
 
-    // Save play button state before unloading the page
     window.addEventListener("beforeunload", function () {
         document.querySelectorAll('.play-button img').forEach(img => {
             localStorage.setItem('playImage', img.src);
         });
     });
 
-    // Format time function
     function formatTime(seconds) {
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
