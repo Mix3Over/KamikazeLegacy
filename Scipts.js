@@ -45,18 +45,18 @@ document.addEventListener("DOMContentLoaded", function () {
                     const newPlayImage = x.querySelector('img');
                     newAudio.pause();
                     newPlayImage.src = playIcon.src;
-                    newPlayImage.style.width = "65px";
-                    newPlayImage.style.height = "65px";
+                    newPlayImage.style.width = "46px";
+                    newPlayImage.style.height = "46px";
                 });
                 audio.play();
                 playImage.src = pauseIcon.src;
-                playImage.style.width = "43px";
-                playImage.style.height = "43px";
+                playImage.style.width = "38px";
+                playImage.style.height = "38px";
             } else {
                 audio.pause();
                 playImage.src = playIcon.src;
-                playImage.style.width = "65px";
-                playImage.style.height = "65px";
+                playImage.style.width = "46px";
+                playImage.style.height = "46px";
             }
             localStorage.setItem('playImage', playImage.src);
         });
